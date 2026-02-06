@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>methoden - k-iiiihh mag vol.01</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <!-- LOGO LEFT -->
+      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2025</a>
+      
+      <!-- NAV MENU TOGGLE -->
+      <button class="nav-menu-toggle" id="navMenuToggle">+</button>
+      <ul class="nav-links" id="navLinks" style="display: none;">
+        <li><a href="qa.html">q&a</a></li>
+        <li><a href="galerie.html">galerie</a></li>
+        <li><a href="methoden.html">methoden</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Methods Guide Section -->
+  <section id="methods" class="methods">
+    <div class="container">
+      <div class="methods-main">
+        <!-- Main Question -->
+        <div class="methods-question">
+          <button class="question-button" id="questionBtn">was brauchst du?</button>
+        </div>
+
+        <!-- Options Container (hidden by default) -->
+        <div class="methods-options" id="methodsOptions" style="display: none;">
+          
+          <!-- Option 1: Inspiration -->
+          <div class="method-option">
+            <button class="option-button" id="inspirationBtn" onclick="window.location.href='galerie.html'">
+              <h3>inspiration</h3>
+            </button>
+          </div>
+
+          <!-- Option 2: Help with KI Creation -->
+          <div class="method-option">
+            <button class="option-button" id="helpBtn" onclick="window.location.href='methoden-hilfe.html'">
+              <h3>hilfe bei ki-kreation</h3>
+            </button>
+          </div>
+
+          <!-- Option 3: Fear Management -->
+          <div class="method-option">
+            <button class="option-button" id="fearBtn">
+              <h3>nimm mir die angst</h3>
+            </button>
+            <div class="option-content" id="fearContent" style="display: none;">
+              <div class="fear-question">
+                <h3>wovor hast du angst?</h3>
+                <div class="fear-options">
+                  <button class="fear-answer-button">
+                    angst dass ki meine kreativen fähigkeiten ersetzt
+                  </button>
+                  <button class="fear-answer-button">
+                    angst, dass kunst austauschbar, beliebig und seelenlos wird
+                  </button>
+                  <button class="fear-answer-button">
+                    angst, mit der aktuellen ki-entwicklung nicht mitzukommen
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Toggle main options visibility
+    const questionBtn = document.getElementById('questionBtn');
+    const methodsOptions = document.getElementById('methodsOptions');
+    const fearBtn = document.getElementById('fearBtn');
+    const fearContent = document.getElementById('fearContent');
+
+    // Main question button toggle
+    questionBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      methodsOptions.style.display = methodsOptions.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Navigation menu toggle
+    const navMenuToggle = document.getElementById('navMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (navMenuToggle && navLinks) {
+      navMenuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const isVisible = navLinks.style.display === 'block';
+        navLinks.style.display = isVisible ? 'none' : 'block';
+        navMenuToggle.classList.toggle('active');
+        navMenuToggle.textContent = isVisible ? '+' : '|';
+      });
+    }
+
+    // Fear button toggle
+    fearBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      fearContent.style.display = fearContent.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Fear answer buttons - placeholder for future functionality
+    const fearAnswerButtons = document.querySelectorAll('.fear-answer-button');
+    fearAnswerButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Hier können später weitere Inhalte hinzugefügt werden
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>q&a - k-iiiihh mag vol.01</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <!-- LOGO LEFT -->
+      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2025</a>
+      
+      <!-- NAV MENU TOGGLE -->
+      <button class="nav-menu-toggle" id="navMenuToggle">+</button>
+      <ul class="nav-links" id="navLinks" style="display: none;">
+        <li><a href="qa.html">q&a</a></li>
+        <li><a href="galerie.html">galerie</a></li>
+        <li><a href="methoden.html">methoden</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Q&A Section -->
+  <section id="qa" class="qa-section">
+    <div class="container">
+      <h2>häufig gestellte fragen</h2>
+      <div class="qa-grid">
+        <!-- Q&A Item 1 -->
+        <div class="qa-item">
+          <button class="qa-trigger" aria-expanded="false">
+            <span class="qa-icon">+</span>
+            <span class="qa-question">warum sollte ich ki benutzen?</span>
+          </button>
+          <div class="qa-answer">
+            <p>
+              ki kann als werkzeug dienen, um ideen zu sortieren, varianten zu entwickeln und denkprozesse anzustoßen. sie hilft dabei, schneller zu testen und entscheidungen bewusster zu treffen. der kreative wert entsteht nicht durch den output selbst, sondern durch den umgang mit den ergebnissen.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q&A Item 2 -->
+        <div class="qa-item">
+          <button class="qa-trigger" aria-expanded="false">
+            <span class="qa-icon">+</span>
+            <span class="qa-question">wie bleibt meine arbeit originell?</span>
+          </button>
+          <div class="qa-answer">
+            <p>
+              originalität entsteht nicht durch das tool, sondern durch die person, die es benutzt. sie zeigt sich in der eigenen perspektive, in den entscheidungen und darin, wie ergebnisse ausgewählt, kombiniert und weiterentwickelt werden. ki kann unterstützen, aber nur du weißt, was für dein projekt wirklich relevant ist. besonders spannend wird es, wenn ki mit klassischen techniken kombiniert wird.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q&A Item 3 -->
+        <div class="qa-item">
+          <button class="qa-trigger" aria-expanded="false">
+            <span class="qa-icon">+</span>
+            <span class="qa-question">ersetzt ki meine kreativität?</span>
+          </button>
+          <div class="qa-answer">
+            <p>
+              ki ersetzt kreativität nicht, sie verschiebt lediglich den schwerpunkt. der fokus liegt stärker auf konzeption, kuration und bewussten entscheidungen. wichtig ist die frage, was ausgedrückt werden soll und warum ein ergebnis funktioniert. ki bleibt dabei ein werkzeug, kein ersatz für eine eigene haltung oder idee.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Q&A Toggle Functionality
+    document.querySelectorAll('.qa-trigger').forEach(button => {
+      button.addEventListener('click', function() {
+        const item = this.parentElement;
+        const isOpen = this.getAttribute('aria-expanded') === 'true';
+        
+        // Schließe alle anderen Items
+        document.querySelectorAll('.qa-item').forEach(el => {
+          el.querySelector('.qa-trigger').setAttribute('aria-expanded', 'false');
+        });
+        
+        // Toggle current item
+        this.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+    
+    // Navigation menu toggle
+    const navMenuToggle = document.getElementById('navMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (navMenuToggle && navLinks) {
+      navMenuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const isVisible = navLinks.style.display === 'block';
+        navLinks.style.display = isVisible ? 'none' : 'block';
+        navMenuToggle.classList.toggle('active');
+        navMenuToggle.textContent = isVisible ? '+' : '|';
+      });
+    }
+  </script>
+</body>
+</html>

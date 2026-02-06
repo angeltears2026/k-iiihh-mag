@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "name": "jon rafman",
+    "image": "assets/images/jon-rafman.jpeg",
+    "website": "https://www.jonrafman.com",
+    "focus": "narrative world-building",
+    "description": "jon rafman nutzt ki-generierte bilder, um erzählräume zu schaffen, die zwischen realität und fiktion oszillieren. seine arbeiten erforschen, wie technologie unser verständnis von raum, intimität und digitaler identität transformiert."
+  },
+  {
+    "id": 2,
+    "name": "ayoung kim",
+    "image": "assets/images/ayoung-kim.jpeg",
+    "website": "http://ayoungkim.com",
+    "focus": "fiktive universen via ki",
+    "description": "ayoung kim erforscht ki als werkzeug für die schöpfung vollständiger fiktionaler welten. ihre praxis verbindet weltenbau mit algorithmischer generierung und hinterfragt, wie künstliche systeme neue ästhetiken kreieren."
+  },
+  {
+    "id": 3,
+    "name": "valentin hansen",
+    "image": "assets/images/valentin-hansen.jpeg",
+    "website": "https://oe-magazine.de/how-max-started-running-and-never-returned",
+    "focus": "automatisierte kreativität und kuration",
+    "description": "mit seinem projekt 'max' lässt valentin hansen einen selbst entwickelten algorithmus alle zwei minuten neue songs generieren. die ki agiert als eigenständiger partner, dessen flüchtige werke hansen als haptischen gegenpol konsequent auf analogen kassetten sichert."  },
+  {
+    "id": 4,
+    "name": "@saysukeee",
+    "image": "assets/images/saysukeee.jpeg",
+    "website": "https://www.instagram.com/saysukeee",
+    "focus": "visuelle kunst mit ki",
+    "description": "beschreibung der künstler*in anpassen"
+  },
+  {
+    "id": 5,
+    "name": "@noway_recordings",
+    "image": "assets/images/noway_recordings.jpeg",
+    "website": "https://www.instagram.com/noway_recordings",
+    "focus": "visuelle kunst mit ki",
+    "description": "beschreibung der künstler*in anpassen"
+  },
+  {
+    "id": 6,
+    "name": "@oasis.seo.ai",
+    "image": "assets/images/oasis.seo.ai.jpeg",
+    "website": "https://www.instagram.com/oasis.seo.ai",
+    "focus": "visuelle kunst mit ki",
+    "description": "visuelle kunst mit ki"
+  }
+]

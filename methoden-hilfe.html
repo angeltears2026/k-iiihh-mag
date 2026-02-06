@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>hilfe bei ki-kreation - k-iiiihh mag vol.01</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <!-- LOGO LEFT -->
+      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2025</a>
+      
+      <!-- NAV MENU TOGGLE -->
+      <button class="nav-menu-toggle" id="navMenuToggle">+</button>
+      <ul class="nav-links" id="navLinks" style="display: none;">
+        <li><a href="qa.html">q&a</a></li>
+        <li><a href="galerie.html">galerie</a></li>
+        <li><a href="methoden.html">methoden</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Methods Guide Section -->
+  <section id="methods" class="methods">
+    <div class="container">
+      <h2>hilfe bei ki-kreation</h2>
+      
+      <div class="methods-grid">
+        <!-- Method 1 -->
+        <div class="method-card">
+          <h3>01. mixed media generating</h3>
+          <p>
+            man kann ki-tools verwenden, um bestehende fotos, videos, malereien oder zeichnungen digital zu verfremden, zu animieren oder zu bearbeiten. ihr könntet zum beispiel versuchen, fotos oder zeichnungen, die ihr gemacht habt, zu animieren, um damit experimentelle arbeiten herzustellen.
+          </p>
+        </div>
+
+        <!-- Method 2 -->
+        <div class="method-card">
+          <h3>02. experimentelle zufallsverfahren</h3>
+          <p>
+            tools zur erzeugung von bildern und videos können auch als experimentelle zufallsverfahren betrachtet werden, auf deren basis man weiterarbeitet. ihr generiert ein bild, das euch eigentlich nicht gefällt, aber zu etwas anderem inspiriert – oder ihr nehmt teile aus einem bild oder video, an denen ihr ohne ki weiterarbeitet. dabei kann man auch mit ungewöhnlichen prompts experimentieren, wie gedichten oder song-lyrics.
+          </p>
+        </div>
+
+        <!-- Method 3 -->
+        <div class="method-card">
+          <h3>03. iterative ki</h3>
+          <p>
+            tretet in einen dialog mit der ki! lasst euch etwas generieren, was ihr wieder verändert, anpasst oder umkehrt. eure ergebnisse könnt ihr wieder von der ki verändern lassen und dann selbst wieder anpassen. so könnt ihr in einen dialogischen prozess mit der ki treten. dieser prozess kann selbst auch dokumentiert werden, woraus etwas entstehen kann. dabei müsst ihr euch auch nicht auf ein tool beschränken – lasst bilder generieren, aus denen musik entsteht, aus denen texte entstehen, aus denen wieder bilder entstehen, die ihr verändert.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    const navMenuToggle = document.getElementById('navMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (navMenuToggle && navLinks) {
+      navMenuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const isVisible = navLinks.style.display === 'block';
+        navLinks.style.display = isVisible ? 'none' : 'block';
+        navMenuToggle.classList.toggle('active');
+        navMenuToggle.textContent = isVisible ? '+' : '|';
+      });
+    }
+  </script>
+</body>
+</html>

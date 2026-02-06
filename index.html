@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>k-iiiihh mag vol.01</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <!-- LOGO LEFT -->
+      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2026</a>
+      
+      <!-- NAV MENU TOGGLE -->
+      <button class="nav-menu-toggle" id="navMenuToggle">+</button>
+      <ul class="nav-links" id="navLinks" style="display: none;">
+        <li><a href="qa.html">q&a</a></li>
+        <li><a href="galerie.html">galerie</a></li>
+        <li><a href="methoden.html">methoden</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Teleprompter/Marquee -->
+  <div class="teleprompter">
+    <div class="teleprompter-content">
+      <span>keine angst ★ keine angst ★ keine angst ★ keine angst ★ keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★  keine angst ★ keine angst ★ keine angst ★ keine angst ★   </span>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="assets/videos/plant-hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>k-iiiihh mag</h1>
+      <p class="hero-subtitle">vol.01 — 2026</p>
+      
+      <!-- Interactive Methods Section -->
+      <div class="methods-main">
+        <button class="hero-question-button" id="heroQuestionBtn">was brauchst du?</button>
+        
+        <!-- Options Container with Arrows -->
+        <div class="methods-options" id="heroMethodsOptions">
+          
+          <!-- Arrow Diagram -->
+          <div class="arrow-diagram">
+            <svg class="arrows-svg" viewBox="0 0 500 300" preserveAspectRatio="xMidYMid meet">
+              <!-- Left Arrow (diagonal down-left) -->
+              <g class="arrow-group arrow-left">
+                <line x1="200" y1="0.2" x2="50" y2="180" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke"/>
+              </g>
+              
+              <!-- Center Arrow (straight down) -->
+              <g class="arrow-group arrow-center">
+                <line x1="250" y1="1" x2="250" y2="200" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke"/>
+              </g>
+              
+              <!-- Right Arrow (diagonal down-right) -->
+              <g class="arrow-group arrow-right">
+                <line x1="300" y1="1" x2="450" y2="180" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke"/>
+              </g>
+            </svg>
+          </div>
+          
+          <!-- Options Container -->
+          <div class="hero-options-container">
+            <!-- Option 1: Inspiration (Left) -->
+            <button class="hero-option-button option-left" id="inspirationBtn" onclick="window.location.href='galerie.html'">
+              inspiration
+            </button>
+
+            <!-- Option 2: Help with KI Creation (Center) -->
+            <button class="hero-option-button option-center" id="helpBtn" onclick="window.location.href='methoden-hilfe.html'">
+              hilfe bei ki-kreation
+            </button>
+
+            <!-- Option 3: Fear Management (Right) -->
+            <button class="hero-option-button option-right" id="fearBtn">
+              nimm mir die angst
+            </button>
+          </div>
+          
+          <div class="option-content" id="fearContent">
+            <div class="fear-question">
+              <h3>wovor hast du angst?</h3>
+              <div class="fear-options">
+                <button class="fear-answer-button">
+                  angst dass ki meine kreativen fähigkeiten ersetzt
+                </button>
+                <button class="fear-answer-button">
+                  angst, dass kunst austauschbar, beliebig und seelenlos wird
+                </button>
+                <button class="fear-answer-button">
+                  angst, mit der aktuellen ki-entwicklung nicht mitzukommen
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const navMenuToggle = document.getElementById('navMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navMenuToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      const isVisible = navLinks.style.display === 'block';
+      navLinks.style.display = isVisible ? 'none' : 'block';
+      navMenuToggle.classList.toggle('active');
+      navMenuToggle.textContent = isVisible ? '+' : '|';
+    });
+    
+    // Hero Methods Toggle
+    const heroQuestionBtn = document.getElementById('heroQuestionBtn');
+    const heroMethodsOptions = document.getElementById('heroMethodsOptions');
+    const fearBtn = document.getElementById('fearBtn');
+    const fearContent = document.getElementById('fearContent');
+    
+    heroQuestionBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const isActive = !heroMethodsOptions.classList.contains('active');
+      heroMethodsOptions.classList.toggle('active');
+      
+      // Scroll to element with same duration as animation (800ms)
+      if (isActive) {
+        const element = heroMethodsOptions;
+        const targetPosition = element.getBoundingClientRect().top + window.scrollY;
+        const windowCenter = window.innerHeight / 2;
+        const scrollTarget = targetPosition - windowCenter;
+        const startPosition = window.scrollY;
+        const distance = scrollTarget - startPosition;
+        const duration = 800; // Same as animation duration
+        let start = null;
+        
+        function smoothScroll(timestamp) {
+          if (!start) start = timestamp;
+          const progress = (timestamp - start) / duration;
+          
+          if (progress < 1) {
+            // Easing function (ease-out)
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            window.scrollTo(0, startPosition + distance * easeProgress);
+            requestAnimationFrame(smoothScroll);
+          } else {
+            window.scrollTo(0, scrollTarget);
+          }
+        }
+        
+        requestAnimationFrame(smoothScroll);
+      }
+    });
+    
+    fearBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      fearContent.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>galerie - k-iiiihh mag vol.01</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <!-- LOGO LEFT -->
+      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2025</a>
+      
+      <!-- NAV MENU TOGGLE -->
+      <button class="nav-menu-toggle" id="navMenuToggle">+</button>
+      <ul class="nav-links" id="navLinks" style="display: none;">
+        <li><a href="qa.html">q&a</a></li>
+        <li><a href="galerie.html">galerie</a></li>
+        <li><a href="methoden.html">methoden</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Artist Floating Gallery Section -->
+  <section id="gallery" class="gallery">
+    <div class="container">
+      <h2>galerie</h2>
+      <div class="floating-gallery" id="floatingGallery">
+        <!-- Bilder werden per JavaScript aus artists.json geladen -->
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Lade Künstlerinnen aus JSON und zeige sie als schwebende, klickbare Bilder mit asymmetrischer Anordnung
+    async function loadArtists() {
+      try {
+        const response = await fetch('artists.json');
+        let artists = await response.json();
+        const gallery = document.getElementById('floatingGallery');
+        
+        // Shuffle-Funktion (Fisher-Yates)
+        function shuffleArray(arr) {
+          for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+          }
+          return arr;
+        }
+        
+        // Kollisionserkennung in Prozentangaben
+        function checkCollision(newTop, newLeft, positions, imageSize = 150, padding = 30) {
+          const galleryWidth = gallery.offsetWidth || 1000;
+          const imageSizePercent = (imageSize / galleryWidth) * 100;
+          const paddingPercent = (padding / galleryWidth) * 100;
+          
+          const newRight = newLeft + imageSizePercent;
+          const newBottom = newTop + (imageSize / 600) * 100; // Verhältnis zur Höhe
+          
+          for (let pos of positions) {
+            const existingRight = pos.left + imageSizePercent;
+            const existingBottom = pos.top + (imageSize / 600) * 100;
+            
+            if (!(newRight + paddingPercent < pos.left || 
+                  newLeft > existingRight + paddingPercent || 
+                  newBottom + paddingPercent < pos.top || 
+                  newTop > existingBottom + paddingPercent)) {
+              return true;
+            }
+          }
+          return false;
+        }
+        
+        // Finde sichere zufällige Position
+        function findSafePosition(positions, maxAttempts = 100) {
+          for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const top = Math.random() * 75;
+            const left = Math.random() * 85;
+            
+            if (!checkCollision(top, left, positions)) {
+              return { top, left };
+            }
+          }
+          return null;
+        }
+        
+        // Künstlerinnen randomisieren
+        artists = shuffleArray(artists);
+        
+        // Gallery Höhe dynamisch anpassen
+        gallery.style.height = (Math.ceil(artists.length / 2) * 300) + 'px';
+        
+        const positions = [];
+        
+        artists.forEach((artist) => {
+          const link = document.createElement('a');
+          link.href = artist.website;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.className = 'floating-artist';
+          link.title = artist.name;
+          
+          // Finde sichere Position
+          const pos = findSafePosition(positions);
+          if (pos) {
+            positions.push(pos);
+            link.style.top = pos.top + '%';
+            link.style.left = pos.left + '%';
+          }
+          
+          const img = document.createElement('img');
+          img.src = artist.image;
+          img.alt = artist.name;
+          
+          link.appendChild(img);
+          
+          // Füge Beschreibung hinzu
+          const description = document.createElement('div');
+          description.className = 'artist-description';
+          description.textContent = artist.name;
+          link.appendChild(description);
+          
+          gallery.appendChild(link);
+        });
+      } catch (error) {
+        console.error('Fehler beim Laden der Künstlerinnen:', error);
+      }
+    }
+    
+    // Laden beim Seitenstart
+    document.addEventListener('DOMContentLoaded', loadArtists);
+    
+    // Navigation menu toggle
+    const navMenuToggle = document.getElementById('navMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (navMenuToggle && navLinks) {
+      navMenuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const isVisible = navLinks.style.display === 'block';
+        navLinks.style.display = isVisible ? 'none' : 'block';
+        navMenuToggle.classList.toggle('active');
+        navMenuToggle.textContent = isVisible ? '+' : '|';
+      });
+    }
+  </script>
+</body>
+</html>
