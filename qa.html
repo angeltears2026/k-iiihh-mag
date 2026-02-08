@@ -24,16 +24,13 @@
   </nav>
 
   <!-- Q&A Section -->
-  <section id="qa" class="qa-section">
+  <section id="qa" class="qa-section subpage-hero">
     <div class="container">
-      <h2>häufig gestellte fragen</h2>
-      <div class="qa-grid">
+      <h2 style="display: none;">häufig gestellte fragen</h2>
+      <div class="floating-qa" id="floatingQA">
         <!-- Q&A Item 1 -->
-        <div class="qa-item">
-          <button class="qa-trigger" aria-expanded="false">
-            <span class="qa-icon">+</span>
-            <span class="qa-question">warum sollte ich ki benutzen?</span>
-          </button>
+        <div class="qa-item floating-qa-item">
+          <button class="qa-question-text" aria-expanded="false">warum sollte ich ki benutzen?</button>
           <div class="qa-answer">
             <p>
               ki kann als werkzeug dienen, um ideen zu sortieren, varianten zu entwickeln und denkprozesse anzustoßen. sie hilft dabei, schneller zu testen und entscheidungen bewusster zu treffen. der kreative wert entsteht nicht durch den output selbst, sondern durch den umgang mit den ergebnissen.
@@ -42,11 +39,8 @@
         </div>
 
         <!-- Q&A Item 2 -->
-        <div class="qa-item">
-          <button class="qa-trigger" aria-expanded="false">
-            <span class="qa-icon">+</span>
-            <span class="qa-question">wie bleibt meine arbeit originell?</span>
-          </button>
+        <div class="qa-item floating-qa-item">
+          <button class="qa-question-text" aria-expanded="false">wie bleibt meine arbeit originell?</button>
           <div class="qa-answer">
             <p>
               originalität entsteht nicht durch das tool, sondern durch die person, die es benutzt. sie zeigt sich in der eigenen perspektive, in den entscheidungen und darin, wie ergebnisse ausgewählt, kombiniert und weiterentwickelt werden. ki kann unterstützen, aber nur du weißt, was für dein projekt wirklich relevant ist. besonders spannend wird es, wenn ki mit klassischen techniken kombiniert wird.
@@ -55,11 +49,8 @@
         </div>
 
         <!-- Q&A Item 3 -->
-        <div class="qa-item">
-          <button class="qa-trigger" aria-expanded="false">
-            <span class="qa-icon">+</span>
-            <span class="qa-question">ersetzt ki meine kreativität?</span>
-          </button>
+        <div class="qa-item floating-qa-item">
+          <button class="qa-question-text" aria-expanded="false">ersetzt ki meine kreativität?</button>
           <div class="qa-answer">
             <p>
               ki ersetzt kreativität nicht, sie verschiebt lediglich den schwerpunkt. der fokus liegt stärker auf konzeption, kuration und bewussten entscheidungen. wichtig ist die frage, was ausgedrückt werden soll und warum ein ergebnis funktioniert. ki bleibt dabei ein werkzeug, kein ersatz für eine eigene haltung oder idee.
@@ -71,21 +62,158 @@
   </section>
 
   <script>
-    // Q&A Toggle Functionality
-    document.querySelectorAll('.qa-trigger').forEach(button => {
+    // Store original positions
+    const originalPositions = new Map();
+    const sidePositions = new Map();
+    
+    // Floating QA positioning with collision detection and viewport bounds
+    function positionFloatingQA() {
+      const items = document.querySelectorAll('.floating-qa-item');
+      const positions = [];
+      const padding = 20;
+      const topPadding = 160; // Extra padding for top nav
+      const minSpacing = 40; // Minimum spacing between items
+      
+      items.forEach((item, index) => {
+        // Get actual item dimensions
+        const itemWidth = item.offsetWidth || 300;
+        const itemHeight = item.offsetHeight || 150;
+        
+        let randomX, randomY, overlapping = true;
+        let attempts = 0;
+        
+        // Calculate max bounds to keep items in viewport
+        const maxX = Math.max(padding, window.innerWidth - itemWidth - padding);
+        const maxY = Math.max(topPadding, window.innerHeight - itemHeight - padding);
+        const minX = padding;
+        const minY = topPadding;
+        
+        // Try to find a non-overlapping position
+        while (overlapping && attempts < 100) {
+          randomX = minX + Math.random() * (maxX - minX);
+          randomY = minY + Math.random() * (maxY - minY);
+          
+          // Check for overlaps with existing positions
+          overlapping = positions.some(pos => {
+            const distX = Math.abs(randomX - pos.x);
+            const distY = Math.abs(randomY - pos.y);
+            return distX < (itemWidth + minSpacing) && distY < (itemHeight + minSpacing);
+          });
+          
+          attempts++;
+        }
+        
+        // Ensure final position is within bounds
+        randomX = Math.max(padding, Math.min(randomX, window.innerWidth - itemWidth - padding));
+        randomY = Math.max(topPadding, Math.min(randomY, window.innerHeight - itemHeight - padding));
+        
+        // Store position
+        const position = { x: randomX, y: randomY };
+        positions.push(position);
+        originalPositions.set(item, position);
+        
+        // Apply position
+        item.style.position = 'fixed';
+        item.style.left = randomX + 'px';
+        item.style.top = randomY + 'px';
+        item.style.zIndex = 10;
+      });
+    }
+    
+    // Calculate side positions for other items
+    function calculateSidePositions(activeItem) {
+      const items = document.querySelectorAll('.floating-qa-item');
+      const activeIndex = Array.from(items).indexOf(activeItem);
+      const itemWidth = activeItem.offsetWidth || 300;
+      const itemHeight = activeItem.offsetHeight || 150;
+      const padding = 60;
+      const topPadding = 160;
+      
+      let sideIndex = 0;
+      items.forEach((item, index) => {
+        if (item === activeItem) return;
+        
+        // Alternate left and right sides
+        if (sideIndex % 2 === 0) {
+          // Left side
+          const sideX = padding;
+          const sideY = Math.max(topPadding, topPadding + (sideIndex * 200));
+          sidePositions.set(item, { x: sideX, y: sideY });
+        } else {
+          // Right side
+          const sideX = Math.max(padding, window.innerWidth - (item.offsetWidth || 300) - padding);
+          const sideY = Math.max(topPadding, topPadding + ((sideIndex - 1) * 200));
+          sidePositions.set(item, { x: sideX, y: sideY });
+        }
+        sideIndex++;
+      });
+    }
+    
+    // Q&A Toggle Functionality with Center Animation
+    document.querySelectorAll('.qa-question-text').forEach(button => {
       button.addEventListener('click', function() {
-        const item = this.parentElement;
+        const qaItem = this.closest('.floating-qa-item');
         const isOpen = this.getAttribute('aria-expanded') === 'true';
+        const items = document.querySelectorAll('.floating-qa-item');
         
-        // Schließe alle anderen Items
-        document.querySelectorAll('.qa-item').forEach(el => {
-          el.querySelector('.qa-trigger').setAttribute('aria-expanded', 'false');
-        });
-        
-        // Toggle current item
-        this.setAttribute('aria-expanded', !isOpen);
+        if (!isOpen) {
+          // Opening: move item to center and others to sides
+          this.setAttribute('aria-expanded', 'true');
+          
+          // Close other items and move them to sides
+          calculateSidePositions(qaItem);
+          
+          items.forEach(item => {
+            if (item === qaItem) {
+              // Animate active item to center
+              const itemWidth = item.offsetWidth;
+              const itemHeight = item.offsetHeight;
+              const targetX = (window.innerWidth - itemWidth) / 2;
+              const targetY = Math.max(160, (window.innerHeight - itemHeight) / 2);
+              
+              item.style.transition = 'all 0.6s ease-out';
+              item.style.left = targetX + 'px';
+              item.style.top = targetY + 'px';
+              item.style.zIndex = 100;
+            } else {
+              // Move other items to sides
+              const otherButton = item.querySelector('.qa-question-text');
+              if (otherButton) {
+                otherButton.setAttribute('aria-expanded', 'false');
+              }
+              
+              if (sidePositions.has(item)) {
+                const sidePos = sidePositions.get(item);
+                item.style.transition = 'all 0.6s ease-out';
+                item.style.left = sidePos.x + 'px';
+                item.style.top = sidePos.y + 'px';
+                item.style.zIndex = 5;
+              }
+            }
+          });
+        } else {
+          // Closing: return all items to original positions
+          this.setAttribute('aria-expanded', 'false');
+          
+          items.forEach(item => {
+            if (originalPositions.has(item)) {
+              const origPos = originalPositions.get(item);
+              item.style.transition = 'all 0.6s ease-out';
+              item.style.left = origPos.x + 'px';
+              item.style.top = origPos.y + 'px';
+              item.style.zIndex = 10;
+            }
+          });
+          
+          // Clear side positions
+          sidePositions.clear();
+        }
       });
     });
+    
+    // Position floating QA on load
+    window.addEventListener('load', positionFloatingQA);
+    positionFloatingQA();
     
     // Navigation menu toggle
     const navMenuToggle = document.getElementById('navMenuToggle');
