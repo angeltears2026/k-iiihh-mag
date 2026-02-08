@@ -24,72 +24,197 @@
   </nav>
 
   <!-- Methods Guide Section -->
-  <section id="methods" class="methods">
+  <section id="methods" class="methods subpage-hero">
     <div class="container">
-      <div class="methods-main">
-        <!-- Main Question -->
-        <div class="methods-question">
-          <button class="question-button" id="questionBtn">was brauchst du?</button>
+      <h2 style="display: none;">methoden</h2>
+      <div class="floating-methods" id="floatingMethods">
+        <!-- Method 1 -->
+        <div class="method-item floating-method-item">
+          <button class="method-question-text" aria-expanded="false">methode 1</button>
+          <div class="method-answer">
+            <p>
+              man kann ki-tools verwenden, um bestehende fotos, videos, malereien oder zeichnungen digital zu verfremden, zu animieren oder zu bearbeiten. ihr könntet zum beispiel versuchen, fotos oder zeichnungen, die ihr gemacht habt, zu animieren, um damit experimentelle arbeiten herzustellen.
+            </p>
+          </div>
         </div>
 
-        <!-- Options Container (hidden by default) -->
-        <div class="methods-options" id="methodsOptions" style="display: none;">
-          
-          <!-- Option 1: Inspiration -->
-          <div class="method-option">
-            <button class="option-button" id="inspirationBtn" onclick="window.location.href='galerie.html'">
-              <h3>inspiration</h3>
-            </button>
+        <!-- Method 2 -->
+        <div class="method-item floating-method-item">
+          <button class="method-question-text" aria-expanded="false">methode 2</button>
+          <div class="method-answer">
+            <p>
+              tools zur erzeugung von bildern und videos können auch als experimentelle zufallsverfahren betrachtet werden, auf deren basis man weiterarbeitet. ihr generiert ein bild, das euch eigentlich nicht gefällt, aber zu etwas anderem inspiriert – oder ihr nehmt teile aus einem bild oder video, an denen ihr ohne ki weiterarbeitet. dabei kann man auch mit ungewöhnlichen prompts experimentieren, wie gedichten oder song-lyrics.
+            </p>
           </div>
+        </div>
 
-          <!-- Option 2: Help with KI Creation -->
-          <div class="method-option">
-            <button class="option-button" id="helpBtn" onclick="window.location.href='methoden-hilfe.html'">
-              <h3>hilfe bei ki-kreation</h3>
-            </button>
+        <!-- Method 3 -->
+        <div class="method-item floating-method-item">
+          <button class="method-question-text" aria-expanded="false">methode 3</button>
+          <div class="method-answer">
+            <p>
+              tretet in einen dialog mit der ki! lasst euch etwas generieren, was ihr wieder verändert, anpasst oder umkehrt. eure ergebnisse könnt ihr wieder von der ki verändern lassen und dann selbst wieder anpassen. so könnt ihr in einen dialogischen prozess mit der ki treten. dieser prozess kann selbst auch dokumentiert werden, woraus etwas entstehen kann. dabei müsst ihr euch auch nicht auf ein tool beschränken – lasst bilder generieren, aus denen musik entsteht, aus denen texte entstehen, aus denen wieder bilder entstehen, die ihr verändert.
+            </p>
           </div>
-
-          <!-- Option 3: Fear Management -->
-          <div class="method-option">
-            <button class="option-button" id="fearBtn">
-              <h3>nimm mir die angst</h3>
-            </button>
-            <div class="option-content" id="fearContent" style="display: none;">
-              <div class="fear-question">
-                <h3>wovor hast du angst?</h3>
-                <div class="fear-options">
-                  <button class="fear-answer-button">
-                    angst dass ki meine kreativen fähigkeiten ersetzt
-                  </button>
-                  <button class="fear-answer-button">
-                    angst, dass kunst austauschbar, beliebig und seelenlos wird
-                  </button>
-                  <button class="fear-answer-button">
-                    angst, mit der aktuellen ki-entwicklung nicht mitzukommen
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
   </section>
 
   <script>
-    // Toggle main options visibility
-    const questionBtn = document.getElementById('questionBtn');
-    const methodsOptions = document.getElementById('methodsOptions');
-    const fearBtn = document.getElementById('fearBtn');
-    const fearContent = document.getElementById('fearContent');
-
-    // Main question button toggle
-    questionBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      methodsOptions.style.display = methodsOptions.style.display === 'none' ? 'block' : 'none';
+    // Store original positions
+    const originalPositions = new Map();
+    const sidePositions = new Map();
+    
+    // Floating Methods positioning with collision detection and viewport bounds
+    function positionFloatingMethods() {
+      const items = document.querySelectorAll('.floating-method-item');
+      const positions = [];
+      const padding = 20;
+      const topPadding = 160; // Extra padding for top nav
+      const minSpacing = 40; // Minimum spacing between items
+      
+      items.forEach((item, index) => {
+        // Get actual item dimensions
+        const itemWidth = item.offsetWidth || 300;
+        const itemHeight = item.offsetHeight || 150;
+        
+        let randomX, randomY, overlapping = true;
+        let attempts = 0;
+        
+        // Calculate max bounds to keep items in viewport
+        const maxX = Math.max(padding, window.innerWidth - itemWidth - padding);
+        const maxY = Math.max(topPadding, window.innerHeight - itemHeight - padding);
+        const minX = padding;
+        const minY = topPadding;
+        
+        // Try to find a non-overlapping position
+        while (overlapping && attempts < 100) {
+          randomX = minX + Math.random() * (maxX - minX);
+          randomY = minY + Math.random() * (maxY - minY);
+          
+          // Check for overlaps with existing positions
+          overlapping = positions.some(pos => {
+            const distX = Math.abs(randomX - pos.x);
+            const distY = Math.abs(randomY - pos.y);
+            return distX < (itemWidth + minSpacing) && distY < (itemHeight + minSpacing);
+          });
+          
+          attempts++;
+        }
+        
+        // Ensure final position is within bounds
+        randomX = Math.max(padding, Math.min(randomX, window.innerWidth - itemWidth - padding));
+        randomY = Math.max(topPadding, Math.min(randomY, window.innerHeight - itemHeight - padding));
+        
+        // Store position
+        const position = { x: randomX, y: randomY };
+        positions.push(position);
+        originalPositions.set(item, position);
+        
+        // Apply position
+        item.style.position = 'fixed';
+        item.style.left = randomX + 'px';
+        item.style.top = randomY + 'px';
+        item.style.zIndex = 10;
+      });
+    }
+    
+    // Calculate side positions for other items
+    function calculateSidePositions(activeItem) {
+      const items = document.querySelectorAll('.floating-method-item');
+      const activeIndex = Array.from(items).indexOf(activeItem);
+      const itemWidth = activeItem.offsetWidth || 300;
+      const itemHeight = activeItem.offsetHeight || 150;
+      const padding = 60;
+      const topPadding = 160;
+      
+      let sideIndex = 0;
+      items.forEach((item, index) => {
+        if (item === activeItem) return;
+        
+        // Alternate left and right sides
+        if (sideIndex % 2 === 0) {
+          // Left side
+          const sideX = padding;
+          const sideY = Math.max(topPadding, topPadding + (sideIndex * 200));
+          sidePositions.set(item, { x: sideX, y: sideY });
+        } else {
+          // Right side
+          const sideX = Math.max(padding, window.innerWidth - (item.offsetWidth || 300) - padding);
+          const sideY = Math.max(topPadding, topPadding + ((sideIndex - 1) * 200));
+          sidePositions.set(item, { x: sideX, y: sideY });
+        }
+        sideIndex++;
+      });
+    }
+    
+    // Method Toggle Functionality with Center Animation
+    document.querySelectorAll('.method-question-text').forEach(button => {
+      button.addEventListener('click', function() {
+        const methodItem = this.closest('.floating-method-item');
+        const isOpen = this.getAttribute('aria-expanded') === 'true';
+        const items = document.querySelectorAll('.floating-method-item');
+        
+        if (!isOpen) {
+          // Opening: move item to center and others to sides
+          this.setAttribute('aria-expanded', 'true');
+          
+          // Close other items and move them to sides
+          calculateSidePositions(methodItem);
+          
+          items.forEach(item => {
+            if (item === methodItem) {
+              // Animate active item to center
+              const itemWidth = item.offsetWidth;
+              const itemHeight = item.offsetHeight;
+              const targetX = (window.innerWidth - itemWidth) / 2;
+              const targetY = Math.max(160, (window.innerHeight - itemHeight) / 2);
+              
+              item.style.transition = 'all 0.6s ease-out';
+              item.style.left = targetX + 'px';
+              item.style.top = targetY + 'px';
+              item.style.zIndex = 100;
+            } else {
+              // Move other items to sides
+              const otherButton = item.querySelector('.method-question-text');
+              if (otherButton) {
+                otherButton.setAttribute('aria-expanded', 'false');
+              }
+              
+              if (sidePositions.has(item)) {
+                const sidePos = sidePositions.get(item);
+                item.style.transition = 'all 0.6s ease-out';
+                item.style.left = sidePos.x + 'px';
+                item.style.top = sidePos.y + 'px';
+                item.style.zIndex = 5;
+              }
+            }
+          });
+        } else {
+          // Closing: return all items to original positions
+          this.setAttribute('aria-expanded', 'false');
+          
+          items.forEach(item => {
+            if (originalPositions.has(item)) {
+              const origPos = originalPositions.get(item);
+              item.style.transition = 'all 0.6s ease-out';
+              item.style.left = origPos.x + 'px';
+              item.style.top = origPos.y + 'px';
+              item.style.zIndex = 10;
+            }
+          });
+          
+          // Clear side positions
+          sidePositions.clear();
+        }
+      });
     });
-
+    
+    // Position floating methods on load
+    window.addEventListener('load', positionFloatingMethods);
+    positionFloatingMethods();
+    
     // Navigation menu toggle
     const navMenuToggle = document.getElementById('navMenuToggle');
     const navLinks = document.getElementById('navLinks');
@@ -102,21 +227,6 @@
         navMenuToggle.textContent = isVisible ? '+' : '|';
       });
     }
-
-    // Fear button toggle
-    fearBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      fearContent.style.display = fearContent.style.display === 'none' ? 'block' : 'none';
-    });
-
-    // Fear answer buttons - placeholder for future functionality
-    const fearAnswerButtons = document.querySelectorAll('.fear-answer-button');
-    fearAnswerButtons.forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Hier können später weitere Inhalte hinzugefügt werden
-      });
-    });
   </script>
 </body>
 </html>
