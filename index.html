@@ -32,7 +32,7 @@
 
   <!-- Hero Section -->
   <section id="home" class="hero">
-    <video class="hero-video" autoplay muted loop playsinline controls preload="metadata">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata">
       <source src="assets/videos/plant-hero.mp4" type="video/mp4">
     </video>
     <div class="hero-content">
@@ -43,62 +43,23 @@
       <div class="methods-main">
         <button class="hero-question-button" id="heroQuestionBtn">was brauchst du?</button>
         
-        <!-- Options Container with Arrows -->
+        <!-- Options Container -->
         <div class="methods-options" id="heroMethodsOptions">
-          
-          <!-- Arrow Diagram -->
-          <div class="arrow-diagram">
-            <svg class="arrows-svg" viewBox="0 0 500 300" preserveAspectRatio="xMidYMid meet">
-              <!-- Left Arrow (diagonal down-left) -->
-              <g class="arrow-group arrow-left">
-                <line x1="200" y1="0.2" x2="50" y2="180" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke"/>
-              </g>
-              
-              <!-- Center Arrow (straight down) -->
-              <g class="arrow-group arrow-center">
-                <line x1="250" y1="1" x2="250" y2="200" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke"/>
-              </g>
-              
-              <!-- Right Arrow (diagonal down-right) -->
-              <g class="arrow-group arrow-right">
-                <line x1="300" y1="1" x2="450" y2="180" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke"/>
-              </g>
-            </svg>
-          </div>
-          
-          <!-- Options Container -->
           <div class="hero-options-container">
             <!-- Option 1: Inspiration (Left) -->
-            <button class="hero-option-button option-left" id="inspirationBtn" onclick="window.location.href='galerie.html'">
+            <a href="galerie.html" class="hero-option-button option-left">
               inspiration
-            </button>
+            </a>
 
             <!-- Option 2: Help with KI Creation (Center) -->
-            <button class="hero-option-button option-center" id="helpBtn" onclick="window.location.href='methoden-hilfe.html'">
+            <a href="methoden.html" class="hero-option-button option-center">
               hilfe bei ki-kreation
-            </button>
+            </a>
 
             <!-- Option 3: Fear Management (Right) -->
-            <button class="hero-option-button option-right" id="fearBtn">
+            <a href="qa.html" class="hero-option-button option-right">
               nimm mir die angst
-            </button>
-          </div>
-          
-          <div class="option-content" id="fearContent">
-            <div class="fear-question">
-              <h3>wovor hast du angst?</h3>
-              <div class="fear-options">
-                <button class="fear-answer-button">
-                  angst dass ki meine kreativen fähigkeiten ersetzt
-                </button>
-                <button class="fear-answer-button">
-                  angst, dass kunst austauschbar, beliebig und seelenlos wird
-                </button>
-                <button class="fear-answer-button">
-                  angst, mit der aktuellen ki-entwicklung nicht mitzukommen
-                </button>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -120,23 +81,23 @@
     // Hero Methods Toggle
     const heroQuestionBtn = document.getElementById('heroQuestionBtn');
     const heroMethodsOptions = document.getElementById('heroMethodsOptions');
-    const fearBtn = document.getElementById('fearBtn');
-    const fearContent = document.getElementById('fearContent');
     
     heroQuestionBtn.addEventListener('click', function(e) {
       e.preventDefault();
       const isActive = !heroMethodsOptions.classList.contains('active');
       heroMethodsOptions.classList.toggle('active');
       
-      // Scroll to element with same duration as animation (800ms)
+      // Hide the button when active
       if (isActive) {
+        heroQuestionBtn.style.display = 'none';
+        
         const element = heroMethodsOptions;
         const targetPosition = element.getBoundingClientRect().top + window.scrollY;
         const windowCenter = window.innerHeight / 2;
         const scrollTarget = targetPosition - windowCenter;
         const startPosition = window.scrollY;
         const distance = scrollTarget - startPosition;
-        const duration = 800; // Same as animation duration
+        const duration = 800;
         let start = null;
         
         function smoothScroll(timestamp) {
@@ -144,7 +105,6 @@
           const progress = (timestamp - start) / duration;
           
           if (progress < 1) {
-            // Easing function (ease-out)
             const easeProgress = 1 - Math.pow(1 - progress, 3);
             window.scrollTo(0, startPosition + distance * easeProgress);
             requestAnimationFrame(smoothScroll);
@@ -154,12 +114,9 @@
         }
         
         requestAnimationFrame(smoothScroll);
+      } else {
+        heroQuestionBtn.style.display = 'block';
       }
-    });
-    
-    fearBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      fearContent.classList.toggle('active');
     });
 
     // iOS Safari Autoplay Fix
