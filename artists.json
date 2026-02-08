@@ -45,5 +45,37 @@
     "website": "https://www.instagram.com/oasis.seo.ai",
     "focus": "visuelle kunst mit ki",
     "description": "visuelle kunst mit ki"
+  },
+  {
+    "id": 7,
+    "name": "@ann_potapakhina",
+    "image": "assets/images/ann_potapakhina.jpeg",
+    "website": "https://www.instagram.com/ann_potapakhina/",
+    "focus": "[focus hier eintragen]",
+    "description": "[beschreibung hier eintragen]"
+  },
+  {
+    "id": 8,
+    "name": "@another.archives.ai",
+    "image": "assets/images/another-archives-ai.jpeg",
+    "website": "https://www.instagram.com/another.archives.ai/",
+    "focus": "[focus hier eintragen]",
+    "description": "[beschreibung hier eintragen]"
+  },
+  { 
+    "id": 9,
+    "name": "@keremipsum",
+    "image": "assets/images/keremipsum.jpeg",
+    "website": "https://www.instagram.com/keremipsum/",
+    "focus": "[focus hier eintragen]",
+    "description": "[beschreibung hier eintragen]"
+  }, 
+  { 
+   "id": 10,
+    "name": "@erez_arts",
+    "image": "assets/images/erez_arts.jpeg",
+    "website": "https://www.instagram.com/erez_arts/",
+    "focus": "[focus hier eintragen]",
+    "description": "[beschreibung hier eintragen]"
   }
 ]
