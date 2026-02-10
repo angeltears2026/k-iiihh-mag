@@ -11,11 +11,12 @@
   <nav class="top-nav">
     <div class="nav-container">
       <!-- LOGO LEFT -->
-      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2025</a>
+      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2026 ★</a>
       
       <!-- NAV MENU TOGGLE -->
       <button class="nav-menu-toggle" id="navMenuToggle">+</button>
       <ul class="nav-links" id="navLinks" style="display: none;">
+        <li><a href="about.html">about</a></li>
         <li><a href="qa.html">q&a</a></li>
         <li><a href="galerie.html">galerie</a></li>
         <li><a href="methoden.html">methoden</a></li>
@@ -132,9 +133,22 @@
     // Laden beim Seitenstart
     document.addEventListener('DOMContentLoaded', loadArtists);
     
-    // Navigation menu toggle
+    // Navigation menu positioning and toggle
     const navMenuToggle = document.getElementById('navMenuToggle');
     const navLinks = document.getElementById('navLinks');
+    
+    function positionNavMenu() {
+      if (!navMenuToggle || !navLinks) return;
+      
+      const toggleRect = navMenuToggle.getBoundingClientRect();
+      const linksWidth = navLinks.offsetWidth;
+      const gap = 24; // 1.5rem in pixels (aus .nav-links a padding)
+      
+      // Position: button right edge - links width - gap
+      const rightPosition = window.innerWidth - toggleRect.right + gap;
+      navLinks.style.right = rightPosition + 'px';
+    }
+    
     if (navMenuToggle && navLinks) {
       navMenuToggle.addEventListener('click', function(e) {
         e.preventDefault();
@@ -142,7 +156,16 @@
         navLinks.style.display = isVisible ? 'none' : 'block';
         navMenuToggle.classList.toggle('active');
         navMenuToggle.textContent = isVisible ? '+' : '|';
+        
+        // Position menu after showing
+        if (!isVisible) {
+          setTimeout(positionNavMenu, 0);
+        }
       });
+      
+      // Position on load and resize
+      window.addEventListener('load', positionNavMenu);
+      window.addEventListener('resize', positionNavMenu);
     }
   </script>
 </body>
