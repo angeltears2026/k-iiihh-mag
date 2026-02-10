@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>about - k-iiiihh mag vol.01</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <!-- LOGO LEFT -->
+      <a href="index.html" class="nav-logo">k-iiiihh mag vol.01 — 2026 ★</a>
+      
+      <!-- NAV MENU TOGGLE -->
+      <button class="nav-menu-toggle" id="navMenuToggle">+</button>
+      <ul class="nav-links" id="navLinks" style="display: none;">
+        <li><a href="about.html">about</a></li>
+        <li><a href="qa.html">q&a</a></li>
+        <li><a href="galerie.html">galerie</a></li>
+        <li><a href="methoden.html">methoden</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <section id="about" class="about subpage-hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+      <source src="assets/videos/plant-hero.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+      <h2>über das projekt</h2>
+      <div class="about-content">
+        <p class="about-text">
+          K-iiiihh ist ein Projekt, das künstlerische Praxis und künstliche Intelligenz zusammenbringt, mit Raum für unterschiedliche Perspektiven.
+        </p>
+        <p class="about-text">
+          KI und Kunst lösen derzeit starke Reaktionen aus: Unbehagen, Widerstand, aber auch Neugier. Die Gründe dafür sind berechtigt. Fragen nach Urheberschaft, die Sorge um Entwertung kreativer Arbeit, die Kritik an Trainingsdaten, all das prägt die aktuelle Diskussion und gehört dazu.
+        </p>
+        
+        <h3>worum geht es?</h3>
+        
+        <p class="about-text">
+          Sich mit KI auseinanderzusetzen kann verschiedenes bedeuten: Sie zu verstehen, zu kritisieren, zu nutzen oder bewusst abzulehnen. Jede dieser Haltungen braucht Wissen als Grundlage.
+        </p>
+        <p class="about-text">
+          Im Rahmen des Seminars "Prä-Prompting Digital Literacy" haben wir Methoden entwickelt, um generativer KI kritisch und experimentell zu begegnen. Dabei ging es darum, eine eigene Position zu finden: Wie navigieren wir sinnvoll durch diese neuen Möglichkeitsräume? Wie entwickeln wir Intuition im Umgang mit dieser Technologie, ohne uns von ihr abhängig zu machen?
+        </p>
+        
+        <h3>was findet ihr hier?</h3>
+        
+        <p class="about-text">
+          Diese Website sammelt Perspektiven, Beispiele und Methoden zur Auseinandersetzung:
+        </p>
+        
+        <ul class="about-list">
+          <li>Künstlerische Vorbilder wie Jon Rafman und Ayoung Kim zeigen, wie KI Teil einer kritischen künstlerischen Praxis werden kann</li>
+          <li>Praktische Übungen laden zum Experimentieren ein – für die, die das möchten</li>
+          <li>Reflexionsfragen helfen dabei, eine informierte Entscheidung zu treffen</li>
+        </ul>
+        
+        <p class="about-text">
+          Was daraus entsteht, ob kritische Distanz oder vorsichtiges Experiment, liegt bei euch.
+        </p>
+        
+        <p class="about-text">
+          Ein Projekt von: Carlotta, Philipp, Alicia
+        </p>
+        
+        <p class="about-text">
+          Im Rahmen von: Prä-Prompting Digital Literacy (Klaus Gasteier)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Navigation menu positioning and toggle
+    const navMenuToggle = document.getElementById('navMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    function positionNavMenu() {
+      if (!navMenuToggle || !navLinks) return;
+      
+      const toggleRect = navMenuToggle.getBoundingClientRect();
+      const linksWidth = navLinks.offsetWidth;
+      const gap = 24; // 1.5rem in pixels (aus .nav-links a padding)
+      
+      // Position: button right edge - links width - gap
+      const rightPosition = window.innerWidth - toggleRect.right + gap;
+      navLinks.style.right = rightPosition + 'px';
+    }
+    
+    navMenuToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      const isVisible = navLinks.style.display === 'block';
+      navLinks.style.display = isVisible ? 'none' : 'block';
+      navMenuToggle.classList.toggle('active');
+      navMenuToggle.textContent = isVisible ? '+' : '|';
+      
+      // Position menu after showing
+      if (!isVisible) {
+        setTimeout(positionNavMenu, 0);
+      }
+    });
+    
+    // Position on load and resize
+    window.addEventListener('load', positionNavMenu);
+    window.addEventListener('resize', positionNavMenu);
+  </script>
+</body>
+</html>
